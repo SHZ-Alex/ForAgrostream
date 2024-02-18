@@ -21,7 +21,9 @@ public class WaybillService : IWaybillService
     public async Task<WaybillDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         // TODO: Если сущность не найдена по идентификатору, кинуть исключение типа EntityNotFoundException
-        Waybill? waybill = await _db.Waybills.Include(u => u.Items).FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+        Waybill? waybill = await _db.Waybills
+            .Include(u => u.Items)
+            .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
 
         if (waybill == null)
             throw new EntityNotFoundException();
